@@ -1,8 +1,8 @@
 class Newsrag < Formula
   desc "Local-first evidence retrieval for city hall PDFs"
   homepage "https://github.com/evcraddock/newsrag"
-  url "https://github.com/evcraddock/newsrag/releases/download/v0.3.0/newsrag-0.3.0-macos-arm64.tar.gz"
-  sha256 "239a897c6c3d5c23fd57d7204d81ae6511d3109e3ef56a421a4538fddeb56279"
+  url "https://github.com/evcraddock/newsrag/releases/download/v0.4.0/newsrag-0.4.0-macos-arm64.tar.gz"
+  sha256 "70213e00b6e55de878ec2fed6457fc3febd90a418c700ac6e539140f08566b6d"
   license "MIT"
 
   depends_on arch: :arm64
@@ -20,11 +20,8 @@ class Newsrag < Formula
 
   def caveats
     <<~EOS
-      Ollama is optional. To use local embeddings:
-
-        brew install ollama
-        brew services start ollama
-        ollama pull nomic-embed-text
+      Configure an OpenAI-compatible embedding service before ingestion or vector search.
+      See https://github.com/evcraddock/newsrag/blob/v#{version}/docs/embeddings.md
     EOS
   end
 
