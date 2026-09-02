@@ -1,5 +1,4 @@
-# brew tap-new uses this file to generate a PR test workflow for the new tap
-name: brew test-bot
+name: Homebrew formula checks
 
 on:
   push:
@@ -14,22 +13,13 @@ defaults:
     shell: bash -xeuo pipefail {0}
 
 jobs:
-  test-bot:
+  formula:
     strategy:
       matrix:
-        os: [ macos-26 ]
-        include:
-          - os: ubuntu-latest
-            container:
-              image: ghcr.io/homebrew/brew:main
-              options: --privileged
+        os: [macos-15, macos-26]
     runs-on: ${{ matrix.os }}
-    container: ${{ fromJSON(toJSON(matrix.container)) }} # zizmor: ignore[unpinned-images]
     permissions:
-      actions: read
-      checks: read
       contents: read
-      pull-requests: read
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -44,17 +34,14 @@ jobs:
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ matrix.os }}-rubygems-
 
-      - run: brew test-bot --only-cleanup-before
+      - name: Check formula style
+        run: brew style --formula evcraddock/tap/newsrag
 
-      - run: brew test-bot --only-setup
+      - name: Audit formula
+        run: brew audit --strict --new --online evcraddock/tap/newsrag
 
-      - run: brew test-bot --only-tap-syntax
-      - run: brew test-bot --only-formulae
-        if: github.event_name == 'pull_request'
+      - name: Install formula
+        run: brew install --build-from-source evcraddock/tap/newsrag
 
-      - name: Upload bottles as artifact
-        if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: bottles_${{ matrix.os }}
-          path: '*.bottle.*'
+      - name: Test formula
+        run: brew test evcraddock/tap/newsrag

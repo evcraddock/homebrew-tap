@@ -1,18 +1,35 @@
-# Evcraddock Tap
+# Evcraddock Homebrew Tap
 
-## How do I install these formulae?
+## NewsRAG
 
-`brew install evcraddock/tap/<formula>`
+Install the latest stable NewsRAG release and its native OCR dependencies on Apple Silicon macOS:
 
-Or `brew tap evcraddock/tap` and then `brew install <formula>`.
-
-Or, in a `brew bundle` `Brewfile`:
-
-```ruby
-tap "evcraddock/tap"
-brew "<formula>"
+```bash
+brew install evcraddock/tap/newsrag
 ```
 
-## Documentation
+Verify the installation:
 
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+```bash
+newsrag --version
+newsrag doctor
+newsrag status --initialize
+```
+
+Ollama is optional. For local embeddings:
+
+```bash
+brew install ollama
+brew services start ollama
+ollama pull nomic-embed-text
+```
+
+Update or remove NewsRAG with:
+
+```bash
+brew update
+brew upgrade newsrag
+brew uninstall newsrag
+```
+
+See the [NewsRAG repository](https://github.com/evcraddock/newsrag) for configuration and usage documentation.
