@@ -1,8 +1,8 @@
 class Newsrag < Formula
   desc "Local-first evidence retrieval for city hall PDFs"
   homepage "https://github.com/evcraddock/newsrag"
-  url "https://github.com/evcraddock/newsrag/releases/download/v0.5.0/newsrag-0.5.0-macos-arm64.tar.gz"
-  sha256 "7a6a2a218a4b76e5e915b17de85cca45726aacec241a5d291d95ba5ea178bdab"
+  url "https://github.com/evcraddock/newsrag/releases/download/v0.6.0/newsrag-0.6.0-macos-arm64.tar.gz"
+  sha256 "bc336b5d6aaa8b3da33b90d1f8078d1d11dc816c8ebbee2b21c4d409ecfeef06"
   license "MIT"
 
   depends_on arch: :arm64
